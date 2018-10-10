@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<properties resource="application.properties" />
+
+	<context id="Mysql" targetRuntime="MyBatis3Simple"
+		defaultModelType="flat">
+		<!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表； 一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
+		<property name="autoDelimitKeywords" value="true" />
+		<!-- 生成的Java文件的编码 -->
+		<property name="javaFileEncoding" value="utf-8" />
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+
+		<!-- 格式化java代码 -->
+		<property name="javaFormatter"
+			value="org.mybatis.generator.api.dom.DefaultJavaFormatter" />
+		<!-- 格式化XML代码 -->
+		<property name="xmlFormatter"
+			value="org.mybatis.generator.api.dom.DefaultXmlFormatter" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<!-- 通用mapper插件,配置自定义的mapper基类,可以生成带注解的实体类 -->
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<property name="mappers" value="com.reed.integration.mybatis.utils.BaseMapper" />
+			<property name="forceAnnotation" value="true"/>
+		</plugin>
+
+		<!-- 注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="false" /><!-- 是否取消注释 -->
+			<property name="suppressDate" value="false" /> <!-- 是否生成注释代时间戳 -->
+		</commentGenerator>
+
+		<jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+			connectionURL="${spring.datasource.url}" userId="${spring.datasource.username}"
+			password="${spring.datasource.password}">
+		</jdbcConnection>
+
+		<!-- 类型转换 -->
+		<javaTypeResolver>
+			<!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成实体类地址 -->
+		<javaModelGenerator targetPackage="com.reed.integration.mybatis.model"
+			targetProject="src/main/java" />
+		<!-- 生成mapxml文件 -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources" />
+		<!-- 生成mapper文件 -->
+		<javaClientGenerator targetPackage="com.reed.integration.mybatis.mapper"
+			targetProject="src/main/java" type="XMLMAPPER" />
+
+		<!-- match XX_* all table -->
+		<!-- table schema="" tableName="XX_%"></table -->
+		<!-- 注：表名默认使用类名，如表名命名不符合驼峰转下划线(只对大写字母进行处理，如TestUser默认对应的表名为test_user)规则时，不会生成@Table注解,需手动加入 -->
+		<table schema="" tableName="tb_user_info" domainObjectName="TbUserInfo">
+			<!--mysql 配置 -->
+			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
+		</table>
+
+	</context>
+</generatorConfiguration>
