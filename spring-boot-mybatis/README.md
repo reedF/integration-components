@@ -1,6 +1,6 @@
 #快速集成spring-boot and mybatis
-参考：
-https://github.com/abel533/Mapper/wiki/1.3-spring-boot
+参考：  
+https://github.com/abel533/Mapper/wiki/1.3-spring-boot  
 https://github.com/pagehelper/Mybatis-PageHelper
 
 # 集成Mybatis及其组件
