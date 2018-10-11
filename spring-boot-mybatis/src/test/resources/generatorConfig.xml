@@ -25,9 +25,11 @@
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		<!-- 通用mapper插件,配置自定义的mapper基类,可以生成带注解的实体类 -->
+		<!-- setting refer to:https://github.com/abel533/Mapper/blob/master/generator/src/main/java/tk/mybatis/mapper/generator/MapperPlugin.java -->
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-			<property name="mappers" value="com.reed.integration.mybatis.utils.BaseMapper" />
-			<property name="forceAnnotation" value="true"/>
+			<property name="mappers"
+				value="com.reed.integration.mybatis.utils.BaseMapper" />
+			<property name="forceAnnotation" value="true" />
 		</plugin>
 
 		<!-- 注释 -->
