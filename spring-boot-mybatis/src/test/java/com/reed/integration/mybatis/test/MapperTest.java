@@ -1,13 +1,16 @@
 package com.reed.integration.mybatis.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +25,32 @@ public class MapperTest {
 
 	@Autowired
 	private TbUserInfoMapper mapper;
+
+	@Before
+	public void setUp() {
+		int r = mapper.selectCount(null);
+		if (r == 0) {
+			List<TbUserInfo> list = new ArrayList<>();
+			TbUserInfo record1 = new TbUserInfo();
+			TbUserInfo record2 = new TbUserInfo();
+			record1.setName("1");
+			record2.setName("2");
+			list.add(record1);
+			list.add(record2);
+			mapper.insertList(list);
+		}
+	}
+
+	@Test
+	// 配置回滚测试数据
+	@Transactional
+	public void testSave() {
+		TbUserInfo record = new TbUserInfo();
+		record.setName("test");
+		// insert后实体会自动赋值ID
+		mapper.insertSelective(record);
+		Assert.assertNotNull(record.getId());
+	}
 
 	@Test
 	public void test() {
