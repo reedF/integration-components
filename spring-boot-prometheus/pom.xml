@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.reed.integration</groupId>
+	<artifactId>spring-boot-prometheus</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-boot-prometheus</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- <actuator.version>1.5.4.RELEASE</actuator.version> -->
+		<prometheus.simpleclient.version>0.5.0</prometheus.simpleclient.version>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- 适用于simpleclient + aop方式 -->
+		<!-- <version>1.5.4.RELEASE</version> -->
+		<!-- 适用于micrometer + actuator2.X方式 -->
+		<!-- <version>2.0.1.RELEASE</version> -->
+		<version>2.0.1.RELEASE</version>
+	</parent>
+
+	<profiles>
+		<profile>
+			<id>v1.x</id>
+			<!-- <activation> <activeByDefault>true</activeByDefault> </activation> -->
+			<properties>
+				<actuator.version>1.5.4.RELEASE</actuator.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>v2.x</id>
+			<properties>
+				<actuator.version>2.0.1.RELEASE</actuator.version>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.prometheus/simpleclient_spring_boot -->
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_spring_boot</artifactId>
+			<version>${prometheus.simpleclient.version}</version>
+			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-actuator</artifactId> </exclusion> </exclusions> -->
+		</dependency>
+		<!-- Hotspot JVM metrics -->
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_hotspot</artifactId>
+			<version>${prometheus.simpleclient.version}</version>
+		</dependency>
+		<!-- Exposition servlet -->
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_servlet</artifactId>
+			<version>${prometheus.simpleclient.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.boot</groupId> 
+		<artifactId>spring-boot-actuator</artifactId> <version>${actuator.version}</version> 
+		</dependency> </dependencies> </dependencyManagement> -->
+
+	<build>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+					<!-- 支持热部署：mvn spring-boot:run -->
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.5.RELEASE</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
