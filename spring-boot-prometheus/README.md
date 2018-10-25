@@ -6,9 +6,10 @@ https://www.jianshu.com/p/afc3759e75b9
 
 
 # 集成prometheus及其组件  
-1.Spring-boot-Actuator整合prometheus
+1.Spring-boot-Actuator整合prometheus  
 配置pom parent为  springboot2.0.1  
 适用于springboot2.0以后版本，Actuator本身可集成prometheus  
+
 		<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
