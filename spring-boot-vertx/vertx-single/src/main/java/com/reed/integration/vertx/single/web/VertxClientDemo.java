@@ -19,10 +19,17 @@ public class VertxClientDemo extends AbstractVerticle {
 	public static void main(String[] args) {
 		Vertx vertx = Vertx.vertx();
 		try {
-			vertx.deployVerticle(VertxClientDemo.class.newInstance());
+			vertx.deployVerticle(VertxClientDemo.class.newInstance(), res -> {
+				if (res.succeeded()) {
+					System.out.println("Deployment id is: " + res.result());
+				} else {
+					System.out.println("Deployment failed!");
+				}
+			});
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public static class User {

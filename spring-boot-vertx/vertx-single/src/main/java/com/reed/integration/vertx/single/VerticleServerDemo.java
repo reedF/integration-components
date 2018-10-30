@@ -1,5 +1,7 @@
 package com.reed.integration.vertx.single;
 
+import java.util.Set;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -38,10 +40,21 @@ public class VerticleServerDemo extends AbstractVerticle {
 		System.out.println("=========server started!============");
 	}
 
+	private static void addShutDownhook(final Vertx vertx) {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				Set<String> deployedVerticleIds = vertx.deploymentIDs();
+				deployedVerticleIds.forEach(vertx::undeploy);
+				vertx.close();
+			}
+		});
+	}
+
 	public static void main(final String... args) {
 		Vertx vertx = Vertx.vertx();
 		try {
 			vertx.deployVerticle(VerticleServerDemo.class.newInstance());
+			addShutDownhook(vertx);
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
