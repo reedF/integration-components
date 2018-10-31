@@ -12,7 +12,7 @@ import io.vertx.spi.cluster.ignite.IgniteClusterManager;
 public class ConsumerApp extends AbstractVerticle {
 
 	public static void main(String[] args) {
-		ClusterManager clusterManager = new IgniteClusterManager();
+		ClusterManager clusterManager = new IgniteClusterManager(IgniteConfig.igniteConfiguration());
 		Vertx.clusteredVertx(new VertxOptions().setClustered(true).setClusterManager(clusterManager), ar -> {
 			if (ar.failed()) {
 				System.err.println("Cannot create vert.x instance : " + ar.cause());
