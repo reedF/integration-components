@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Imports default Ignite configuration -->
+	<import resource="../ignite/ignite-base.xml" />
+
+	<bean parent="ignite.cfg">
+		<property name="cacheConfiguration">
+			<list>
+				<bean class="org.apache.ignite.configuration.CacheConfiguration">
+					<property name="name" value="session-cache" />
+					<property name="cacheMode" value="REPLICATED" />
+					<property name="OnheapCacheEnabled" value="true"/>
+					<property name="backups" value="1" />
+					<property name="evictionPolicy">
+						<bean class="org.apache.ignite.cache.eviction.lru.LruEvictionPolicy">
+							<property name="maxSize" value="150000" />
+						</bean>
+					</property>
+				</bean>
+				<bean class="org.apache.ignite.configuration.CacheConfiguration">
+					<property name="name" value="session-meta" />
+					<property name="cacheMode" value="REPLICATED" />
+					<property name="atomicityMode" value="TRANSACTIONAL" />
+					<property name="writeSynchronizationMode" value="FULL_SYNC" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

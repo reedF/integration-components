@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Imports default Ignite configuration -->
+	<import resource="ignite-base.xml" />
+
+	<bean parent="ignite.cfg">
+		<property name="marshaller">
+			<bean class="org.apache.ignite.internal.binary.BinaryMarshaller" />
+		</property>
+
+		<property name="fileSystemConfiguration">
+			<list>
+				<bean class="org.apache.ignite.configuration.FileSystemConfiguration">
+					<property name="name" value="igfs" />
+
+					<!-- Must correlate with cache affinity mapper. -->
+					<property name="blockSize" value="#{128 * 1024}" />
+					<property name="perNodeBatchSize" value="512" />
+					<property name="perNodeParallelBatchCount" value="16" />
+
+					<!-- Set number of prefetch blocks. -->
+					<property name="prefetchBlocks" value="32" />
+
+					<!-- Example of configured IPC loopback endpoint. -->
+					<!-- <property name="ipcEndpointConfiguration"> <bean class="org.apache.ignite.igfs.IgfsIpcEndpointConfiguration"> 
+						<property name="type" value="TCP" /> </bean> </property> -->
+
+					<!-- Example of configured shared memory endpoint. -->
+					<!-- <property name="ipcEndpointConfiguration"> <bean class="org.apache.ignite.igfs.IgfsIpcEndpointConfiguration"> 
+						<property name="type" value="SHMEM" /> </bean> </property> -->
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>
