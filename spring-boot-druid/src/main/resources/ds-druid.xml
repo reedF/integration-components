@@ -15,7 +15,7 @@
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
 
-		<!-- 自定义属性,逗号可分割多个key -->
+		<!-- 自定义属性,分号可分割多个key -->
 		<property name="connectionProperties" value="isFailfast=true;tag=1" />
 
 		<!-- 配置初始化大小、最小、最大 -->
