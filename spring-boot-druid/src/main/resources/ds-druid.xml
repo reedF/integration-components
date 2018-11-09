@@ -4,15 +4,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- 数据库连接池 -->
-	<!-- 下面的druid配置都是基本配置-->
+	<!-- 下面的druid配置都是基本配置 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 配置连接池属性 -->
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<!-- &amp;socketTimeout=60000 -->
-		<property name="url" value="jdbc:mysql://vip:3318/test?useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
-		<property name="password" value="1234" />
+		<property name="password" value="123456" />
+
+		<!-- 自定义属性,逗号可分割多个key -->
+		<property name="connectionProperties" value="isFailfast=true;tag=1" />
 
 		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="1" />
