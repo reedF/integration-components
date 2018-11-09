@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- 常量定义start -->
+	<!-- 默认日志输出格式 -->
+	<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+	<property name="DEFAULT_PATTERN"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - [%file:%line] - %msg%n" />
+	<property name="MAX_HISTORY" value="30" />
+	<!-- 常量定义end -->
+
+	<!-- 默认日志的console appender，本地使用的日志 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level]-[%logger{50}]-[%file:%line] - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+
+	<!-- 服务器上使用的appender start -->
+	<!-- 默认的file appender，按天切分日志 -->
+<!-- 	<appender name="ROLLING_FILE_DEFAULT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>F:/home/logs/druid/${HOSTNAME}_application.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>F:/home/logs/druid/${HOSTNAME}_application.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>${MAX_HISTORY}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender> -->
+
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<!-- <appender-ref ref="ROLLING_FILE_DEFAULT" /> -->
+	</root>
+
+</configuration>

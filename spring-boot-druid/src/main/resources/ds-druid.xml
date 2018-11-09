@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 数据库连接池 -->
+	<!-- 下面的druid配置都是基本配置-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 配置连接池属性 -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<!-- &amp;socketTimeout=60000 -->
+		<property name="url" value="jdbc:mysql://vip:3318/test?useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="root" />
+		<property name="password" value="1234" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="1" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="10000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<!-- <property name="minEvictableIdleTimeMillis" value="100000" /> -->
+
+		<!-- 验证连接有效与否的SQL，不同的数据配置不同 -->
+		<property name="validationQuery" value="SELECT 1" />
+
+		<!-- 如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效 -->
+		<property name="testWhileIdle" value="true" />
+
+		<!-- 这里建议配置为TRUE，防止取到的连接不可用 -->
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="true" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<!-- 如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。 -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+
+		<!-- 这里配置提交方式，默认就是TRUE，可以不用配置 -->
+		<property name="defaultAutoCommit" value="true" />
+
+		<!-- 合并多个DruidDataSource的监控数据 -->
+		<property name="useGlobalDataSourceStat" value="true" />
+
+		<!-- 开启Druid的监控统计功能,StatFilter可以和其他的Filter配置使用,refer to META-INF/druid-filter.properties -->
+		<property name="filters" value="stat,slf4j" />
+
+		<!-- proxyFilters属性配置,通过bean的方式配置 -->
+		<property name="proxyFilters">
+			<list>
+				<ref bean="log-filter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 上面的druid的配置 -->
+	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+		<property name="dataSourceLogEnabled" value="true" />
+		<!-- 所有连接相关的日志 -->
+		<property name="connectionLogEnabled" value="true" />
+		<!-- 所有Statement相关的日志 -->
+		<property name="statementLogEnabled" value="true" />
+		<!-- 是否显示结果集 -->
+		<property name="resultSetLogEnabled" value="true" />
+		<!-- 是否显示SQL语句 -->
+		<property name="statementExecutableSqlLogEnable" value="true" />
+	</bean>
+
+</beans>
