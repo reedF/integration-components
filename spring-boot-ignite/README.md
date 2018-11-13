@@ -8,10 +8,10 @@ https://blog.csdn.net/yalishadaa/article/details/79400916
 
 
 # ignite-websession
+使用ignite保存tomcat session，分布式部署下，多个tomcat实例间的session共享  
 https://apacheignite-mix.readme.io/docs/web-session-clustering  
 https://github.com/reedF/ignite-components  
 https://github.com/ltlayx/SpringBoot-Ignite     
-使用ignite保存tomcat session，分布式部署下，多个tomcat实例间的session共享  
 注：  
 1.springboot-1.X与2.X对server的配置项命名不同  
 (1)1.x:使用server.X  
@@ -28,6 +28,7 @@ https://apacheignite-mix.readme.io/docs/spring-caching
 https://github.com/pavankjadda/ApacheIgnite-SpringBoot
 https://apacheignite-mix.readme.io/docs/spring-data  
 注：  
+1.版本兼容问题：  
 ignite-spring-data官方提供的2.X版本默认仅支持spring-data-1.X,使用spring-data-commons-2.X时会报异常：   
 Parameter 0 of constructor in org.apache.ignite.springdata.repository.support.IgniteRepositoryImpl required a bean of type 'org.apache.ignite.IgniteCache' that could not be found.  
 具体issue：
@@ -35,13 +36,20 @@ https://issues.apache.org/jira/browse/IGNITE-8382
 https://issues.apache.org/jira/browse/IGNITE-6879  
 官方说明ignite在2.7版本会修复
 临时解决方案：
-1.降级springboot版本为1.5.10
-2.使用修复jar：ignite-spring-data_2.0，
+(1).降级springboot版本为1.5.10
+(2).使用修复jar：ignite-spring-data_2.0，
 参见：https://github.com/apache/ignite/tree/master/modules/spring-data-2.0  
 
+2.Spring context无法注入问题：  
+启动ignite两种方式：  
+ * (1)使用xml启动:  
+ Ignition.start("ignite/ignite-store.xml");  此时ignite会交由spring容器管理  
+ * (2)使用注解模式：  
+ 使用@Configuration与@Bean时，需使用IgniteSpring启动ignite，否则会报“Spring application context resource is not injected”  
 
 
 # ignite-igfs
+ignite文件系统  
 https://github.com/apache/ignite/blob/master/examples/src/main/java/org/apache/ignite/examples/igfs/IgfsExample.java
 
 # ignite使用

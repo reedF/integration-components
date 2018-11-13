@@ -44,20 +44,18 @@
 			<artifactId>ignite-slf4j</artifactId>
 			<version>${ignite.version}</version>
 		</dependency>
-		        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<!-- 将依赖关系标记为可选true是一种最佳做法，可以防止使用项目将devtools传递性地应用于其他模块 -->
-			<optional>true</optional>
-		</dependency>
+		<!-- Cache.Entry做返回类型时，不能依赖spring-boot-devtools，否则会有类型转换错误 -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
+			将依赖关系标记为可选true是一种最佳做法，可以防止使用项目将devtools传递性地应用于其他模块 <optional>true</optional> 
+			<scope>provided</scope> </dependency> -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -73,7 +71,7 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<repositories>
 		<repository>
 			<id>spring-libs-milestone</id>
@@ -81,7 +79,7 @@
 			<url>http://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
 		<finalName>${artifactId}</finalName>
 		<plugins>

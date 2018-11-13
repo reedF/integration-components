@@ -5,12 +5,12 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- Imports default Ignite configuration -->
 	<import resource="ignite-base.xml" />
-
-	<bean parent="ignite.cfg">
+	<!-- ignite文件系统igfs -->
+	<bean id ="ignite-igfs-node" parent="ignite.cfg">
 		<property name="marshaller">
 			<bean class="org.apache.ignite.internal.binary.BinaryMarshaller" />
 		</property>
-
+		<property name="igniteInstanceName" value="ignite-igfs-node" />
 		<property name="fileSystemConfiguration">
 			<list>
 				<bean class="org.apache.ignite.configuration.FileSystemConfiguration">

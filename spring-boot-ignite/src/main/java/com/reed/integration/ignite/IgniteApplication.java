@@ -11,7 +11,8 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 @EnableIgniteRepositories(basePackages = { "com.reed.integration.ignite.repository" })
-@ImportResource(locations = { "classpath:ignite/ignite-igfs.xml" })
+//@ImportResource(locations = { "classpath:ignite/ignite-igfs.xml","classpath:ignite/ignite-store.xml" })
+//@ImportResource(locations = { "classpath:ignite/ignite-store.xml" })
 public class IgniteApplication {
 	public static Logger logger = LoggerFactory.getLogger(IgniteApplication.class);
 

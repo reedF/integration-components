@@ -6,13 +6,14 @@
 	<!-- Imports default Ignite configuration -->
 	<import resource="../ignite/ignite-base.xml" />
 
-	<bean parent="ignite.cfg">
+	<bean id ="ignite-session-node" parent="ignite.cfg">
+		<property name="igniteInstanceName" value="ignite-session-node" />
 		<property name="cacheConfiguration">
 			<list>
 				<bean class="org.apache.ignite.configuration.CacheConfiguration">
 					<property name="name" value="session-cache" />
 					<property name="cacheMode" value="REPLICATED" />
-					<property name="OnheapCacheEnabled" value="true"/>
+					<property name="OnheapCacheEnabled" value="true" />
 					<property name="backups" value="1" />
 					<property name="evictionPolicy">
 						<bean class="org.apache.ignite.cache.eviction.lru.LruEvictionPolicy">
@@ -24,6 +25,7 @@
 					<property name="name" value="session-meta" />
 					<property name="cacheMode" value="REPLICATED" />
 					<property name="atomicityMode" value="TRANSACTIONAL" />
+					<!-- 备份同步异步策略 -->
 					<property name="writeSynchronizationMode" value="FULL_SYNC" />
 				</bean>
 			</list>
