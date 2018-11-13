@@ -66,6 +66,9 @@ public class IgniteStoreCacheConfig {
 		IgniteCacheConfig.startH2Webconsole();
 		IgniteConfiguration igniteConfiguration = new IgniteConfiguration();
 		igniteConfiguration.setIgniteInstanceName(STORE_NODE_NAME);
+		// 对等类加载，default is false.适用于分布式部署，
+		// 实现多个ignite节点间字节码交换，不需要在每个节点都重新部署，适用于分布式计算任务的部署
+		// 集群内如某个节点开启此项，则集群内其他节点也同样必须开启，生成环境不建议开启.
 		igniteConfiguration.setPeerClassLoadingEnabled(true);
 		igniteConfiguration.setCacheConfiguration(cacheCfg);
 		// return Ignition.start(igniteConfiguration);

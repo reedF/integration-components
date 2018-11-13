@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd">
-        
+
 	<bean id="configProperties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
@@ -32,8 +32,8 @@
 
 	<bean abstract="true" id="ignite.cfg"
 		class="org.apache.ignite.configuration.IgniteConfiguration">
-		<!-- Set to true to enable distributed class loading for examples, default 
-			is false. -->
+		<!-- 对等类加载，default is false. 适用于分布式部署， 集群内如某个节点开启此项，则集群内其他节点也同样必须开启，生成环境不建议开启. 
+			作用：实现多个ignite节点间字节码交换，不需要在每个节点都重新部署，适用于分布式计算任务的部署 -->
 		<property name="peerClassLoadingEnabled" value="true" />
 
 		<!-- Enable task execution events for examples. -->
