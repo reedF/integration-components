@@ -42,6 +42,11 @@
 		<property name="testOnBorrow" value="true" />
 		<property name="testOnReturn" value="true" />
 
+		<!-- 是否自动强制回收关闭超时连接（注：此关闭为关闭connection连接，而非关闭底层TCP连接），默认false，此配置项会影响性能(注:new线程堆栈)，只在排查的时候打开 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 连接强制关闭的超时时间，单位：秒 -->
+		<property name="removeAbandonedTimeout" value="300" />
+
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<!-- 如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。 -->
 		<property name="poolPreparedStatements" value="false" />
