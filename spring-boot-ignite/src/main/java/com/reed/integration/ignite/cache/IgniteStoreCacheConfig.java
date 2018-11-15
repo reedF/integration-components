@@ -10,6 +10,7 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteCheckedException;
 import org.apache.ignite.IgniteSpring;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cache.store.jdbc.CacheJdbcPojoStoreFactory;
 import org.apache.ignite.cache.store.jdbc.JdbcType;
@@ -85,6 +86,8 @@ public class IgniteStoreCacheConfig {
 		// 通写,当缓存更新时会自动地进行持久化
 		cacheConfig.setWriteThrough(true);
 		cacheConfig.setCacheMode(CacheMode.REPLICATED);
+		//Set atomicity as transaction
+		cacheConfig.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
 		cacheConfig.setCacheStoreFactory(storeFactory());
 
 		return cacheConfig;
