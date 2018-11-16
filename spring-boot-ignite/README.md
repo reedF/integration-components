@@ -2,6 +2,13 @@
 参考：  
 https://www.javacodegeeks.com/2017/07/apache-ignite-spring-data.html#  
 
+# ignite使用
+中文Doc:https://liyuj.gitee.io/  
+官方样例：  
+https://github.com/apache/ignite/tree/master/examples/src/main/java/org/apache/ignite/examples  
+1.集群监控：  
+可使用监控脚本：ignitevisorcmd.bat，下载地址：https://ignite.apache.org/download.cgi  
+注：下载的apache-ignite-fabric-X.x.x-bin.zip版本需与应用程序使用的ignite版本一致，否则无法使用  
 
 # springboot2.X与1.x调整
 https://blog.csdn.net/yalishadaa/article/details/79400916
@@ -52,20 +59,18 @@ https://issues.apache.org/jira/browse/IGNITE-6879
 ignite文件系统  
 https://github.com/apache/ignite/blob/master/examples/src/main/java/org/apache/ignite/examples/igfs/IgfsExample.java
 
-# ignite使用
-中文Doc:https://liyuj.gitee.io/  
-
-1.集群监控：  
-可使用监控脚本：ignitevisorcmd.bat，下载地址：https://ignite.apache.org/download.cgi  
-注：下载的apache-ignite-fabric-X.x.x-bin.zip版本需与应用程序使用的ignite版本一致，否则无法使用  
-2.ignite计算网格  
+# ignite计算网格  
 https://liyuj.gitee.io/doc/java/ComputeGrid.html 
 demo:https://github.com/srecon/the-apache-ignite-book/tree/master/chapters/chapter-7  
  
-3.ignite服务网格  
+# ignite服务网格  
 https://liyuj.gitee.io/doc/java/ServiceGrid.html    
 
-4.ignite流处理  
+# ignite流处理  
 https://github.com/srecon/the-apache-ignite-book/tree/master/chapters/chapter-8  
 https://github.com/samaitra/streamers  
+
+
+
+
 
