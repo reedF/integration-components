@@ -39,6 +39,12 @@
 			<artifactId>ignite-indexing</artifactId>
 			<version>${ignite.version}</version>
 		</dependency>
+		<!-- 有LGPL依赖，因此无法部署到Maven中央仓库,可从第三方仓库GridGain下载,参见repositories配置 -->
+		<dependency>
+			<groupId>org.apache.ignite</groupId>
+			<artifactId>ignite-schedule</artifactId>
+			<version>2.5.3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.ignite</groupId>
 			<artifactId>ignite-slf4j</artifactId>
@@ -74,9 +80,9 @@
 
 	<repositories>
 		<repository>
-			<id>spring-libs-milestone</id>
-			<name>Spring milestone Repository</name>
-			<url>http://repo.spring.io/milestone</url>
+			<id>Ignite-GridGain</id>
+			<name>Ignite GridGain Repository</name>
+			<url>http://www.gridgainsystems.com/nexus/content/repositories/external/</url>
 		</repository>
 	</repositories>
 
