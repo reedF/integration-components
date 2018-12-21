@@ -15,5 +15,6 @@
     <module>spring-boot-vertx</module>
     <module>spring-boot-ignite</module>
     <module>spring-boot-druid</module>
+    <module>spring-boot-webflux</module>
 	</modules>
 </project>
