@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +30,11 @@ import com.reed.integration.reactor.ReactorApplication;
 import com.reed.integration.reactor.client.model.ReactorMsg;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.Disposable;
+import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.SignalType;
 import reactor.core.scheduler.Schedulers;
 
 @Slf4j
@@ -178,33 +183,60 @@ public class TestReactorApp {
 			Flux<ReactorMsg<String>> eventFlux = Flux.interval(Duration.ofSeconds(1)).map(l -> makeMsg(l));
 			webClient.post().uri("/events/load").contentType(MediaType.APPLICATION_STREAM_JSON).body(eventFlux, type)
 					//
-					.retrieve().bodyToMono(Void.class).log()
+					.retrieve().bodyToMono(Void.class)
 					//
 					.block()
 			//
 			;
 		}
 		if (tag == 2) {
-
 			try {
 				TimeUnit.SECONDS.sleep(3);
+
+				// ConnectableFlux<ReactorMsg> resp =
+				Flux<ReactorMsg> resp =
+						// webClient一旦创建不可变，因此要mutate复制一个新的client
+						webClient.mutate().build().get().uri("/events/get").accept(MediaType.APPLICATION_STREAM_JSON)
+								//
+								.retrieve().bodyToFlux(ReactorMsg.class)
+				//
+				// .log()
+				//
+				// .publish();
+				// resp
+				//
+				// .doOnNext(t -> log.info("====onNext:{}====", t))
+				//
+				// .doOnComplete(() ->
+				// log.info("=====DONE====")).doOnError(e ->
+				// log.error("====ex:{}=====", e))
+				// .doOnTerminate(() ->
+				// log.info("=====Terminate===="))
+				//
+				// .doFinally(type -> fluxFinally(type))
+				//
+				// .publishOn(Schedulers.newSingle("pub-thread"))
+				//
+				// .subscribe(System.out::println)
+				//
+				// .blockLast()
+				//
+				;
+				// resp.connect();
+				resp.subscribe(t -> log.info("=====sub:{}====", t));
+				resp.blockLast();
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-			Flux<ReactorMsg> resp = webClient.mutate().build().get().uri("/events/get")
-					.accept(MediaType.APPLICATION_STREAM_JSON).retrieve().bodyToFlux(ReactorMsg.class).log()
-					//
-					.doOnNext(t -> log.info("====onNext:{}====", t))
-					//
-					.doOnComplete(() -> log.info("=====DONE===="))
-			//
-			// .blockLast()
-			//
-			;
-			//resp.subscribe(t -> log.info("=====sub:{}====", t));
-			//resp.blockLast();
 		}
+	}
+
+	public static void fluxFinally(SignalType type) {
+		if (type == SignalType.ON_COMPLETE || type == SignalType.ON_ERROR) {
+
+		}
+		log.info("=====Finally====");
 	}
 
 	public static ReactorMsg<String> makeMsg(Long l) {
@@ -216,7 +248,8 @@ public class TestReactorApp {
 
 	public static void main(String[] args) {
 		String url = "http://localhost:8080";
-		new Thread(() -> sendOrlistenEvents(1, url)).start();
+		//new Thread(() -> sendOrlistenEvents(1, url)).start();
 		new Thread(() -> sendOrlistenEvents(2, url)).start();
+		
 	}
 }

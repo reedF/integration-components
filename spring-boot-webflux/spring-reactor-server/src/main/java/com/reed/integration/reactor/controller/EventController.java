@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -62,8 +61,11 @@ public class EventController<T> {
 		// return Flux.interval(Duration.ofSeconds(1L)).map((oneSecond) -> new
 		// ReactorMsg<>());
 
-		//return Flux.<ReactorMsg<T>>defer(() -> consumer.flux);
-		return Flux.<ReactorMsg<T>>from(consumer.flux);
+		// return Flux.<ReactorMsg<T>>from(consumer.flux);
+		// 构造hot流
+		Flux<ReactorMsg<T>> flux = Flux.<ReactorMsg<T>>from(consumer.hotSource.publish().autoConnect());
+		// flux.subscribe(System.out::println);
+		return flux.share();
 	}
 
 	@GetMapping(path = "/times", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

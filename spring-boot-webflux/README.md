@@ -20,3 +20,4 @@ spring-webflux上层支持两种开发方式实现响应式编程：
 controller中使用@RequestBody修饰 Mono<T>或Flux<T>传参时，应该使用传入参的then()方法定义返回值，来指明传输完成信号并返回，
 不要创建新的Mono或直接方法签名内定义返回void，这时会导致方法直接返回完成，而没等待客户端请求上传数据，从而引发“Request body is missing”  
 参见：https://jira.spring.io/browse/SPR-17463  
+2.构建无限流：https://zhuanlan.zhihu.com/p/37076370  
