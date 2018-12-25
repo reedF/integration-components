@@ -8,6 +8,7 @@ import com.reed.integration.reactor.client.model.ReactorMsg;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.ReplayProcessor;
 import reactor.core.publisher.UnicastProcessor;
 
 @Slf4j
@@ -15,8 +16,8 @@ public class DisruptorEventHandler<T> implements EventHandler<ReactorMsg<T>>, Wo
 
 	// public Flux<ReactorMsg<T>> flux = Flux.<ReactorMsg<T>>empty();
 	// Hot流，持续不断地产生消息，订阅者只能获取到在其订阅之后产生的消息
-	//EmitterProcessor可向多个订阅者发送数据，UnicastProcessor则最多只能有一个订阅者
-	public EmitterProcessor<ReactorMsg<T>> hotSource = EmitterProcessor.create();
+	//ReplayProcessor可保证订阅者获取全部历史数据,EmitterProcessor可向多个订阅者发送数据，获取的是从订阅时开始之后的数据，UnicastProcessor则最多只能有一个订阅者
+	public ReplayProcessor<ReactorMsg<T>> hotSource = ReplayProcessor.create();
 
 	@Override
 	public void onEvent(ReactorMsg<T> event, long sequence, boolean endOfBatch) throws Exception {
