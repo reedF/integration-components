@@ -248,8 +248,7 @@ public class TestReactorApp {
 
 	public static void main(String[] args) {
 		String url = "http://localhost:8080";
-		new Thread(() -> sendOrlistenEvents(1, url)).start();
+		//new Thread(() -> sendOrlistenEvents(1, url)).start();
 		new Thread(() -> sendOrlistenEvents(2, url)).start();
-		
 	}
 }
