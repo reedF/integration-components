@@ -20,6 +20,7 @@ import com.reed.integration.reactor.disruptor.DisruptorEventProducer;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 /**
  * 使用springMVC controller模式定义reactor
  * @author reed
@@ -70,7 +71,8 @@ public class EventController<T> {
 		// 构造hot流
 		Flux<ReactorMsg<T>> flux = Flux.<ReactorMsg<T>>from(consumer.hotSource.publish().autoConnect());
 		// flux.subscribe(System.out::println);
-		return flux.share();
+		//无数据返回空
+		return flux.share().switchIfEmpty(Flux.empty());
 	}
 
 	@GetMapping(path = "/times", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

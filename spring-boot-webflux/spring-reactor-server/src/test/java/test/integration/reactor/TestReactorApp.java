@@ -70,7 +70,7 @@ public class TestReactorApp {
 				.take(5);
 		resp.subscribe(System.out::println);
 		resp.blockLast();
-		TimeUnit.SECONDS.sleep(1);
+		// TimeUnit.SECONDS.sleep(1);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class TestReactorApp {
 		resp.parallel().runOn(Schedulers.parallel())
 				.subscribe(i -> System.out.println(Thread.currentThread().getName() + " -> " + i));
 		resp.blockLast();
-		TimeUnit.SECONDS.sleep(1);
+		// TimeUnit.SECONDS.sleep(1);
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class TestReactorApp {
 	}
 
 	@Test
-	public void testLoadEvent() {
+	public void testLoadEvent() throws InterruptedException {
 		ParameterizedTypeReference<ReactorMsg<String>> type = new ParameterizedTypeReference<ReactorMsg<String>>() {
 		};
 		List<ReactorMsg<String>> list = new ArrayList<>();
@@ -118,6 +118,7 @@ public class TestReactorApp {
 				.retrieve().bodyToMono(Void.class).log()
 				//
 				.block();
+		// TimeUnit.SECONDS.sleep(1);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -133,7 +134,7 @@ public class TestReactorApp {
 	}
 
 	@Test
-	public void testFunctionLoadEvent() {
+	public void testFunctionLoadEvent() throws InterruptedException {
 		ParameterizedTypeReference<ReactorMsg<String>> type = new ParameterizedTypeReference<ReactorMsg<String>>() {
 		};
 		List<ReactorMsg<String>> list = new ArrayList<>();
@@ -146,6 +147,7 @@ public class TestReactorApp {
 				.retrieve().bodyToMono(Void.class).log()
 				//
 				.block();
+		// TimeUnit.SECONDS.sleep(1);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -154,7 +156,9 @@ public class TestReactorApp {
 		testFunctionLoadEvent();
 		WebClient webClient = WebClient.create(url);
 		Flux<ReactorMsg> resp = webClient.get().uri("/getevents").accept(MediaType.APPLICATION_STREAM_JSON).retrieve()
-				.bodyToFlux(ReactorMsg.class).take(Duration.ofSeconds(5l)).log();
+				.bodyToFlux(ReactorMsg.class).take(Duration.ofSeconds(5l))
+		// .log()
+		;
 		resp.subscribe(System.out::println);
 		resp.blockLast();
 
@@ -268,7 +272,10 @@ public class TestReactorApp {
 				;
 				// resp.connect();
 				Disposable disposable = resp.subscribe(t -> log.info("=====sub:{}====", t));
-				resp.blockLast();
+				// resp.blockLast();
+				TimeUnit.SECONDS.sleep(8);
+				// 取消订阅
+				disposable.dispose();
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();

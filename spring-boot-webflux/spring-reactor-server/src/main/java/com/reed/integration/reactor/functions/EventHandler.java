@@ -67,6 +67,8 @@ public class EventHandler<T> {
 		ParameterizedTypeReference<ReactorMsg<T>> type = new ParameterizedTypeReference<ReactorMsg<T>>() {
 		};
 		return ok().contentType(MediaType.APPLICATION_STREAM_JSON)
-				.body(Flux.from(consumer.hotSource.publish().autoConnect()).share(), type);
+				.body(Flux.from(consumer.hotSource.publish().autoConnect()).share(), type)
+				//无数据返回404 Not Found
+				.switchIfEmpty(ServerResponse.notFound().build());
 	}
 }
