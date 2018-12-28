@@ -105,11 +105,11 @@ public class TestReactorApp {
 
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testGetEvents() {
-
+	public void testGetEvents() throws InterruptedException {
+		testLoadEvent();
 		WebClient webClient = WebClient.create(url);
 		Flux<ReactorMsg> resp = webClient.get().uri("/events/get").accept(MediaType.APPLICATION_STREAM_JSON).retrieve()
-				.bodyToFlux(ReactorMsg.class).log();
+				.bodyToFlux(ReactorMsg.class).take(Duration.ofSeconds(5l)).log();
 		resp.subscribe(System.out::println);
 		resp.blockLast();
 
@@ -131,7 +131,7 @@ public class TestReactorApp {
 				cdl.countDown();
 			}
 			System.out.println("主线程:" + Thread.currentThread().getName() + "countdown自减完成。。。");
-			TimeUnit.SECONDS.sleep(20);
+			TimeUnit.SECONDS.sleep(10);
 			es.shutdown();
 			System.out.println("============主线程退出=================");
 		} catch (Exception e) {
@@ -179,7 +179,7 @@ public class TestReactorApp {
 			};
 			List<ReactorMsg<String>> list = new ArrayList<>();
 			list.add(makeMsg(1l));
-			// 1s一个event,take表示发送5次
+			// 无限发送
 			Flux<ReactorMsg<String>> eventFlux = Flux.interval(Duration.ofSeconds(1)).map(l -> makeMsg(l));
 			webClient.post().uri("/events/load").contentType(MediaType.APPLICATION_STREAM_JSON).body(eventFlux, type)
 					//
@@ -192,7 +192,6 @@ public class TestReactorApp {
 		if (tag == 2) {
 			try {
 				TimeUnit.SECONDS.sleep(3);
-
 				// ConnectableFlux<ReactorMsg> resp =
 				Flux<ReactorMsg> resp =
 						// webClient一旦创建不可变，因此要mutate复制一个新的client
@@ -223,7 +222,7 @@ public class TestReactorApp {
 				//
 				;
 				// resp.connect();
-				resp.subscribe(t -> log.info("=====sub:{}====", t));
+				Disposable disposable = resp.subscribe(t -> log.info("=====sub:{}====", t));
 				resp.blockLast();
 
 			} catch (InterruptedException e) {
@@ -248,7 +247,7 @@ public class TestReactorApp {
 
 	public static void main(String[] args) {
 		String url = "http://localhost:8080";
-		//new Thread(() -> sendOrlistenEvents(1, url)).start();
+		new Thread(() -> sendOrlistenEvents(1, url)).start();
 		new Thread(() -> sendOrlistenEvents(2, url)).start();
 	}
 }
