@@ -51,10 +51,11 @@ public class EventHandler<T> {
 	 * @param serverRequest
 	 * @return
 	 */
-	public Mono<Void> loadEvents(ServerRequest serverRequest) {
+	public Mono<ServerResponse> loadEvents(ServerRequest serverRequest) {
 		ParameterizedTypeReference<ReactorMsg<T>> type = new ParameterizedTypeReference<ReactorMsg<T>>() {
 		};
-		return serverRequest.bodyToFlux(type).doOnNext(event -> producer.product(event)).then();
+		return ServerResponse.ok()
+				.build(serverRequest.bodyToFlux(type).doOnNext(event -> producer.product(event)).then());
 	}
 
 	/**

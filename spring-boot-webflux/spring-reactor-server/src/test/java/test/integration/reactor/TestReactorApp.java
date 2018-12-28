@@ -84,7 +84,8 @@ public class TestReactorApp {
 				.bodyToFlux(String.class)
 				// .log()
 				.take(5);
-		resp.subscribe(System.out::println);
+		resp.parallel().runOn(Schedulers.parallel())
+				.subscribe(i -> System.out.println(Thread.currentThread().getName() + " -> " + i));
 		resp.blockLast();
 		TimeUnit.SECONDS.sleep(1);
 	}
