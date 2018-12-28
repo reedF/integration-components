@@ -73,6 +73,22 @@ public class TestReactorApp {
 		TimeUnit.SECONDS.sleep(1);
 	}
 
+	/**
+	 * 测试函数模式定义的reactor
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void testFunctionSse() throws InterruptedException {
+		WebClient webClient = WebClient.create(url);
+		Flux<String> resp = webClient.get().uri("/sse").accept(MediaType.TEXT_EVENT_STREAM).retrieve()
+				.bodyToFlux(String.class)
+				// .log()
+				.take(5);
+		resp.subscribe(System.out::println);
+		resp.blockLast();
+		TimeUnit.SECONDS.sleep(1);
+	}
+
 	@Test
 	public void testTimes() throws Exception {
 		String r = this.testClient.get().uri("/events/times").exchange().expectStatus().isOk().expectHeader()
@@ -109,6 +125,34 @@ public class TestReactorApp {
 		testLoadEvent();
 		WebClient webClient = WebClient.create(url);
 		Flux<ReactorMsg> resp = webClient.get().uri("/events/get").accept(MediaType.APPLICATION_STREAM_JSON).retrieve()
+				.bodyToFlux(ReactorMsg.class).take(Duration.ofSeconds(5l)).log();
+		resp.subscribe(System.out::println);
+		resp.blockLast();
+
+	}
+
+	@Test
+	public void testFunctionLoadEvent() {
+		ParameterizedTypeReference<ReactorMsg<String>> type = new ParameterizedTypeReference<ReactorMsg<String>>() {
+		};
+		List<ReactorMsg<String>> list = new ArrayList<>();
+		list.add(makeMsg(1l));
+		// 1s一个event,take表示发送5次
+		Flux<ReactorMsg<String>> eventFlux = Flux.interval(Duration.ofSeconds(1)).map(l -> makeMsg(l)).take(5);
+		WebClient webClient = WebClient.create(url);
+		webClient.post().uri("/loadevents").contentType(MediaType.APPLICATION_STREAM_JSON).body(eventFlux, type)
+				//
+				.retrieve().bodyToMono(Void.class).log()
+				//
+				.block();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testFunctionGetEvents() throws InterruptedException {
+		testFunctionLoadEvent();
+		WebClient webClient = WebClient.create(url);
+		Flux<ReactorMsg> resp = webClient.get().uri("/getevents").accept(MediaType.APPLICATION_STREAM_JSON).retrieve()
 				.bodyToFlux(ReactorMsg.class).take(Duration.ofSeconds(5l)).log();
 		resp.subscribe(System.out::println);
 		resp.blockLast();

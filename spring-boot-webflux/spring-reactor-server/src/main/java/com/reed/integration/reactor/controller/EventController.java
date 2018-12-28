@@ -20,7 +20,12 @@ import com.reed.integration.reactor.disruptor.DisruptorEventProducer;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/**
+ * 使用springMVC controller模式定义reactor
+ * @author reed
+ *
+ * @param <T>
+ */
 @Slf4j
 @RestController
 @RequestMapping("/events")
