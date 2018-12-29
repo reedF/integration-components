@@ -66,7 +66,7 @@ public class EventHandler<T> {
 	public Mono<ServerResponse> getEvents(ServerRequest serverRequest) {
 		ParameterizedTypeReference<ReactorMsg<T>> type = new ParameterizedTypeReference<ReactorMsg<T>>() {
 		};
-		return ok().contentType(MediaType.APPLICATION_STREAM_JSON)
+		return ok().contentType(MediaType.TEXT_EVENT_STREAM)
 				.body(Flux.from(consumer.hotSource.publish().autoConnect()).share(), type)
 				//无数据返回404 Not Found
 				.switchIfEmpty(ServerResponse.notFound().build());

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>RxJs</title>
+</head>
+<body>
+	<h3>Using RsJs to get reactor msg!</h3>
+	<h3>注：请使用Chrome浏览器访问，IE对RxJs不兼容!</h3>
+	<input type="text">
+	<div id="result"></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://cdn.bootcss.com/rxjs/6.0.0-alpha.3/Rx.min.js"></script>
+<script>
+const url = 'http://localhost:8080/events/sse';
+
+var result = Rx.Observable.fromPromise(fetch(url));
+result.subscribe(x => console.log(x.text()), e => console.error(e));
+
+const data$ = Rx.Observable.create(observer => {
+  fetch(url)
+    .then(response => {    	
+       	console.log(response);
+    	return response.text();
+    	}) // or json() or text() or blob() etc.
+    .then(data => {
+      observer.next(data);
+      //console.log(data);
+      //observer.complete();
+    })
+    .catch(err => observer.error(err));
+});
+data$.subscribe(x => console.log(x)); 
+</script>
+<script type="text/javascript">
+//using SSE as event stream
+var evtSource = new EventSource('http://localhost:8080/getevents');
+var sse$ = Rx.Observable.create(observer => {
+	evtSource.addEventListener('message',function(e){
+	    //console.log(e.data);
+		observer.next(e.data);
+	    //observer.complete();
+	});
+	evtSource.addEventListener('error',function(e){
+	    console.log(e);
+	});
+});
+sse$.subscribe(x => console.log(x)); 
+
+</script>
+</html>

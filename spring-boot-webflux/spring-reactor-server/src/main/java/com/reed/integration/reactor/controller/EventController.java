@@ -82,6 +82,7 @@ public class EventController<T> {
 
 	/**
 	 * 服务端推送SSE
+	 * 注：SSE事件流的对应MIME格式必须为text/event-stream
 	 * @return
 	 */
 	@GetMapping(path = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
