@@ -11,6 +11,7 @@ https://github.com/apache/ignite/tree/master/examples/src/main/java/org/apache/i
 注：下载的apache-ignite-fabric-X.x.x-bin.zip版本需与应用程序使用的ignite版本一致，否则无法使用  
 
 # springboot2.X与1.x调整
+https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide  
 https://blog.csdn.net/yalishadaa/article/details/79400916
 
 
