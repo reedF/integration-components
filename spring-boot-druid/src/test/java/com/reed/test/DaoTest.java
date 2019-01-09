@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.reed.druid.DruidApplication;
+import com.reed.druid.dao.BatchDao;
 import com.reed.druid.dao.QueryDao;
 
 @RunWith(SpringRunner.class)
@@ -21,6 +22,9 @@ public class DaoTest {
 	@Autowired
 	private QueryDao dao;
 
+	@Autowired
+	private BatchDao batchDao;
+
 	@Before
 	public void setUp() {
 
@@ -29,6 +33,11 @@ public class DaoTest {
 	@Test
 	public void test() {
 		dao.testQuery(Thread.currentThread().getName());
+	}
+
+	@Test
+	public void testBatch() {
+		batchDao.batchDbInsert(batchDao.getDbsByTs(0l));
 	}
 
 	/**
