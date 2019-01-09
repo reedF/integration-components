@@ -1,4 +1,4 @@
-# 快速集成spring-boot and mybatis
+# 快速集成spring-boot and mybatis and druidDatasource
 参考：  
 https://github.com/abel533/Mapper/wiki/1.3-spring-boot  
 https://github.com/pagehelper/Mybatis-PageHelper
@@ -25,5 +25,11 @@ https://github.com/abel533/Mapper/wiki/3.config
 # 热部署使用
 方式1：引入依赖spring-boot-devtools
 
-方式2：build时使用插件<artifactId>springloaded</artifactId>，并使用mvn spring-boot:run运行
+方式2：（已废弃）build时使用插件<artifactId>springloaded</artifactId>，并使用mvn spring-boot:run运行
+
+# Druid使用
+参考：  
+https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter  
+druid监控：  
+https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98  
 
