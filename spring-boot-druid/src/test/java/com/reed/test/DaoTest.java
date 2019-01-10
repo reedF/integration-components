@@ -40,6 +40,11 @@ public class DaoTest {
 		batchDao.batchDbInsert(batchDao.getDbsByTs(0l));
 	}
 
+	@Test
+	public void testBatchByReplace() {
+		batchDao.batchDbReplace(batchDao.getDbsByTs(0l));
+	}
+
 	/**
 	 * 多线程并发
 	 */
