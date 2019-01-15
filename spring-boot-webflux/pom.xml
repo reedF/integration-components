@@ -14,6 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.SR2</spring-cloud.version>
 	</properties>
 
 	<build>
@@ -34,4 +35,18 @@
 		<module>spring-reactor-client</module>
 		<module>spring-reactor-server</module>
 	</modules>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- spring cloud -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<!-- 解决parent单继承问题 -->
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
