@@ -17,8 +17,12 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "reactor.client")
 @ConditionalOnProperty(prefix = "reactor.client", name = "enabled", havingValue = "true", matchIfMissing = false)
 public abstract class AbstractReactorClientConfig {
-
+	
+	// reactor server's url,such as http://localhost:8080
 	@Value("url")
 	public String url;
+	// reactor server's service name
+	@Value("discovery.serviceName")
+	public String serviceName;
 
 }

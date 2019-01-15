@@ -12,10 +12,10 @@ import org.springframework.web.reactive.function.client.WebClient;
  *
  */
 @Configuration
+@ConditionalOnProperty(prefix = "reactor.client", name = "url", matchIfMissing = false)
 public class ReactorClientAutoConfig extends AbstractReactorClientConfig {
 
-	@Bean
-	@ConditionalOnProperty(prefix = "reactor.client", name = "url", matchIfMissing = false)
+	@Bean	
 	public WebClient.Builder webClientBuilder() {
 		WebClient.Builder b = null;
 		if (StringUtils.isNotBlank(url)) {
