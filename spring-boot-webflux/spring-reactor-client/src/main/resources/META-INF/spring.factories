@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.reed.integration.reactor.client.config.ReactorClientAutoConfig,\
+com.reed.integration.reactor.client.config.LoadBalanceReactorClientAutoConfig

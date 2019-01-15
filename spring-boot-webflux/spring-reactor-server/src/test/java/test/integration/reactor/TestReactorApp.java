@@ -1,5 +1,6 @@
 package test.integration.reactor;
 
+import java.net.ConnectException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,11 +13,14 @@ import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +31,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.reed.integration.reactor.ReactorApplication;
+import com.reed.integration.reactor.client.ReactorClient;
 import com.reed.integration.reactor.client.model.ReactorMsg;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +58,10 @@ public class TestReactorApp {
 
 	@Autowired
 	private WebTestClient testClient;
+
+	@Autowired
+	@Qualifier("baseReactorClient")
+	private ReactorClient testReactorClient;
 
 	@Before
 	public void prepareClient() {
@@ -162,6 +171,21 @@ public class TestReactorApp {
 		resp.subscribe(System.out::println);
 		resp.blockLast();
 
+	}
+
+	/**
+	 * need to run server first
+	 * @throws InterruptedException
+	 */
+	@Ignore
+	@Test
+	public void testReactorClient() throws InterruptedException {
+		List<ReactorMsg<String>> list = new ArrayList<>();
+		list.add(makeMsg(1l));
+		list.add(makeMsg(2l));
+		boolean r = testReactorClient.sendEvent(list);
+		Assert.assertEquals(true, r);
+		TimeUnit.SECONDS.sleep(2);
 	}
 
 	@Test
