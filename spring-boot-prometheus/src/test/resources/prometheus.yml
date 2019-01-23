@@ -25,8 +25,10 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-    # 要监控的目标地址
-    - targets: ['192.168.13.204:8080']
+    # 要监控的目标地址,可配置多个
+    - targets: ['192.168.13.204:8080','127.0.0.1:9090']
+      labels: 
+        group: 'test'
 
   # using @PrometheusMetrics for springboot-1.X
   - job_name: 'demo'
