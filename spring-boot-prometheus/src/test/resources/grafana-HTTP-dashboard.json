@@ -40,7 +40,7 @@
   "gnetId": 8563,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1548907448037,
+  "iteration": 1548991078682,
   "links": [],
   "panels": [
     {
@@ -606,7 +606,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "delta(EntryEndpoint{job=\"$job\",instance=\"$instance\",uri=\"TARGET_RESPONSE_CODE\",method != \"200\"}[1m]) > 0",
+          "expr": "delta(EntryEndpoint{job=\"$job\",instance=\"$instance\",uri=\"TARGET_RESPONSE_CODE\",method=~\"4..|5..\"}[1m]) > 0",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Target-response-code-{{method}}",
@@ -615,7 +615,7 @@
           "step": 10
         },
         {
-          "expr": "delta(EntryEndpoint{job=\"$job\",instance=\"$instance\",uri=\"ENTRY_RESPONSE_CODE\" ,method != \"200\"}[1m]) > 0",
+          "expr": "delta(EntryEndpoint{job=\"$job\",instance=\"$instance\",uri=\"ENTRY_RESPONSE_CODE\" ,method=~\"4..|5..\"}[1m]) > 0",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Entry-response-code-{{method}}",
@@ -1741,5 +1741,5 @@
   "timezone": "",
   "title": "HTTP-Api-router",
   "uid": "O_iWbzlmz",
-  "version": 6
+  "version": 7
 }
