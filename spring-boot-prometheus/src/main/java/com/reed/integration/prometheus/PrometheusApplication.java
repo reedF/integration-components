@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 无需配置@EnablePrometheusEndpoint，@EnableSpringBootMetricsCollector
  */
 @SpringBootApplication
-//以下两注解仅适用于springboot-1.X，使用2.X时，无需此配置
-//@EnablePrometheusEndpoint
-//@EnableSpringBootMetricsCollector
+// 以下两注解仅适用于springboot-1.X，使用2.X时，无需此配置
+// @EnablePrometheusEndpoint
+// @EnableSpringBootMetricsCollector
 public class PrometheusApplication {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

@@ -3,6 +3,7 @@ package com.reed.integration.prometheus.mvc;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reed.integration.prometheus.common.PrometheusMetrics;
+import com.reed.integration.prometheus.config.NacosTestConfig;
 
 @RestController
 @RequestMapping("/apps")
 public class HelloController {
+
+	@Autowired
+	private NacosTestConfig nacos;
 
 	/**
 	 * 获取全部应用
@@ -60,6 +65,16 @@ public class HelloController {
 		} else {
 			r = ResponseEntity.badRequest().build();
 		}
+		return r;
+	}
+
+	@RequestMapping(value = "/nacos")
+	public ResponseEntity<ResponseEntity<String>> getNacos() {
+		ResponseEntity<String> data = new ResponseEntity<String>("Nacos:" + nacos.toString(), HttpStatus.OK);
+		ResponseEntity<ResponseEntity<String>> r = new ResponseEntity<>(data, HttpStatus.OK);
+
+		r = ResponseEntity.ok(data);
+
 		return r;
 	}
 }

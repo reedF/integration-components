@@ -13,6 +13,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- <actuator.version>1.5.4.RELEASE</actuator.version> -->
 		<prometheus.simpleclient.version>0.5.0</prometheus.simpleclient.version>
+		<!-- nacos config version：-->
+		<!-- 在使用spring-boot2.X时，使用0.2.1，使用spring-boot-1.X时，使用0.1.1： -->
+		<nacos.config.version>0.2.1</nacos.config.version>
 	</properties>
 
 	<parent>
@@ -63,7 +66,7 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.47</version>
-			<scope>test</scope>
+			<!-- <scope>test</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -102,7 +105,22 @@
 			<artifactId>simpleclient_servlet</artifactId>
 			<version>${prometheus.simpleclient.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>		
+		<!-- config server for nacos -->
+		<dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>${nacos.config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-actuator</artifactId>
+            <version>${nacos.config.version}</version>
+        </dependency>
+        
 	</dependencies>
 
 	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.boot</groupId> 

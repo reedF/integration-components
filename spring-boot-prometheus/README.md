@@ -44,3 +44,13 @@ docker run -d --name=prometheus -p 9090:9090 -v /c/Users/prometheus/prometheus.y
 4.访问：http://192.168.59.103:9090/targets  
 
 
+# Nacos使用
+refer to:
+https://github.com/nacos-group    
+https://github.com/nacos-group/nacos-spring-boot-project  
+https://github.com/nacos-group/nacos-spring-project  
+Nacos-server:  
+https://nacos.io/zh-cn/docs/deployment.html  
+https://github.com/alibaba/nacos   
+
+
