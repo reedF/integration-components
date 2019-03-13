@@ -22,6 +22,9 @@ import lombok.Data;
  * 2.@NacosValue无法识别@ConfigurationProperties配置的前缀，在使用@ConfigurationProperties配置前缀后：
  *   A.当配置项key值与java字段名不相同时，需使用@NacosValue配置属性key的全路径,参考test1
  *   B.当配置项key值与java字段一致时，不使用@NacosValue时，无法自动刷新，参考test3
+ * 3.@NacosPropertySource与@NacosConfigurationProperties都可配置需要管理的配置项，二者区别：参考test3
+ *   A.@NacosPropertySource:应用启动时，在不使用@NacosValue注解java字段时，对应key可从远程配置中心获取
+ *   B.@NacosConfigurationProperties：应用启动时，在不使用@NacosValue注解java字段时，对应key只从本地获取
  * @author reed
  *
  *refer to:
@@ -31,9 +34,9 @@ import lombok.Data;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "test.nacos")
-//@NacosPropertySource(dataId = "test", groupId = "g1", autoRefreshed = true)
+@NacosPropertySource(dataId = "test", groupId = "g1", autoRefreshed = true)
 // @EnableNacosConfig(globalProperties = @NacosProperties(namespace ="${nacos.namespace}"))
-@NacosConfigurationProperties(dataId = "test", groupId = "g1", autoRefreshed= true,ignoreNestedProperties=true)
+//@NacosConfigurationProperties(dataId = "test", groupId = "g1", autoRefreshed= true)
 public class NacosTestConfig {
 	@NacosValue(value = "${test.nacos.item1:0}", autoRefreshed = true)
 	// @Value("0")
