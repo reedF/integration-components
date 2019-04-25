@@ -43,6 +43,12 @@ docker run -d --name=prometheus -p 9090:9090 -v /c/Users/prometheus/prometheus.y
 
 4.访问：http://192.168.59.103:9090/targets  
 
+# prometheus pushgateway
+1.docker pull prom/pushgateway  
+2.docker run -d --name=pushgateway -p 9091:9091 prom/pushgateway  
+3.访问：http://192.168.59.103:9091  
+4.配置prometheus.yml,采集pushgateway  
+
 
 # Nacos使用
 refer to:

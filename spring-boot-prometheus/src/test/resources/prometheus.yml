@@ -37,4 +37,12 @@ scrape_configs:
     static_configs:
     # 要监控的目标地址
     - targets: ['192.168.13.204:8080']
-    
+
+  # prometheus pushgateway
+  - job_name: 'pushgateway'
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    static_configs:
+    # 要监控的目标地址
+    - targets: ['192.168.59.103:9091']      
+      
