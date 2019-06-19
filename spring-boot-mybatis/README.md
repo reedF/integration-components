@@ -20,7 +20,10 @@ https://github.com/pagehelper/Mybatis-PageHelper
 可选值为normal用实体名和字段名;camelhump是默认值，驼峰转下划线;uppercase转换为大写;lowercase转换为小写
 
 3.通用Mapper的配置参数详见：
-https://github.com/abel533/Mapper/wiki/3.config
+https://github.com/abel533/Mapper/wiki/3.config  
+4.通用Example的用法：
+https://github.com/abel533/Mapper/wiki/6.example  
+
 
 # 热部署使用
 方式1：引入依赖spring-boot-devtools
