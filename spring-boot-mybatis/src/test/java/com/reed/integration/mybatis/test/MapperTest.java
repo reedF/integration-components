@@ -19,6 +19,9 @@ import com.reed.integration.mybatis.DemoApplication;
 import com.reed.integration.mybatis.mapper.TbUserInfoMapper;
 import com.reed.integration.mybatis.model.TbUserInfo;
 
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.WeekendSqls;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MapperTest {
@@ -58,6 +61,17 @@ public class MapperTest {
 		record.setId(0);
 		int r = mapper.selectCount(record);
 		Assert.assertEquals(0, r);
+	}
+
+	/**
+	 * 通用Example查询用法，使用Weekend自动转换对应的列名
+	 * 参考：https://github.com/abel533/Mapper/wiki/6.example
+	 */
+	@Test
+	public void testByExample() {
+		int r = mapper.selectCountByExample(new Example.Builder(TbUserInfo.class).where(WeekendSqls.<TbUserInfo>custom()
+				.andLike(TbUserInfo::getName, "%1%").andGreaterThan(TbUserInfo::getId, "0")).build());
+		Assert.assertTrue(r > 0);
 	}
 
 	@Test
