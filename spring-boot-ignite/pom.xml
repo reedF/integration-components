@@ -11,7 +11,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ignite.version>2.6.0</ignite.version>
+		<ignite.version>2.8.1</ignite.version>
 	</properties>
 	<dependencies>
 		<dependency>
